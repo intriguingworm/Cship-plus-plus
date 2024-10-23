@@ -7,12 +7,14 @@
 
 using namespace std;
 
+//Defining Variables
 list<string> aiMoves;
 string pc, ec;
 char letter, eletter, lguess;
 int number, enumber, nguess;
 bool pwin = false, ewin = false;
 
+//Get user input for Letter aspect of their coordinate
 void defLetter() {
     cout << "Enter your base coordinate (Letter, A - C): " << endl;
     cin >> letter;
@@ -25,6 +27,7 @@ void defLetter() {
     }
 }
 
+//Get user input for Number aspect of their coordinate
 void defNumber() {
     cout << "Enter your base coordinate (Number, 1-3): " << endl;
     cin >> number;
@@ -36,6 +39,7 @@ void defNumber() {
     }
 }
 
+//Randomly generate a letter based upon a randomly generated number
 void defAiLetter() {
     int temp = rand() % 3;
     if (temp == 0) {
@@ -47,10 +51,12 @@ void defAiLetter() {
     }
 }
 
+//Randomly generate number
 void defAiNumber() {
     enumber = rand() % 3 + 1;
 }
 
+//Get the letter for what the player's guess is
 void playerMoveLetter() {
     cout << "Guess the enemy coordinate's letter (Letter, A - C): " << endl;
     cin >> lguess;
@@ -63,6 +69,7 @@ void playerMoveLetter() {
     }
 }
 
+//Get the number for what the player's guess is
 void playerMoveNumber() {
     cout << "Guess the enemy coordinate's number (Number, 1-3): " << endl;
     cin >> nguess;
@@ -74,6 +81,7 @@ void playerMoveNumber() {
     }
 }
 
+//Boolean used to make sure the ai doesn't do the same move twice
 bool isDuplicate(string move) {
     for (const string& m : aiMoves) {
         if (m == move) {
@@ -100,6 +108,7 @@ int main() {
         playerMoveLetter();
         playerMoveNumber();
         string temp = lguess + to_string(nguess);
+        //compare guess to enemy coordinates
         if (temp == ec) {
             cout << "You win!" << endl;
             pwin = true;
@@ -110,10 +119,10 @@ int main() {
                 defAiLetter();
                 aiGuess = eletter + to_string(enumber);
             } while (isDuplicate(aiGuess));
-
+            //Log the ai's guess so that it won't use the same guess twice
             aiMoves.push_back(aiGuess);
             cout << "The enemy guessed: " << aiGuess << endl;
-
+            //compare the ai's guess to the players coordinates
             if (aiGuess == pc) {
                 cout << "You lose!" << endl;
                 ewin = true;
